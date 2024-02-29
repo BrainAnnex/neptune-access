@@ -1,14 +1,14 @@
-####  WARNING : the Neo4j database identified by the environment variables below, will get erased!!!
+####  WARNING : the NEPTUNE database identified by the environment variables below, will get erased!!!
 
 """
 IMPORTANT - to run the pytests in this file, the following ENVIRONMENT VARIABLES must first be set:
-                1. NEO4J_HOST
-                2. NEO4J_USER
-                3. NEO4J_PASSWORD
+                1. NEPTUNE_HOST
+                2. NEPTUNE_USER
+                3. NEPTUNE_PASSWORD
 
             For example, if using PyCharm, follow the main menu to: Run > Edit Configurations
             and then, in the template for pytest, set Environment Variable to something like:
-                    NEO4J_HOST=bolt://<your IP address>:7687;NEO4J_USER=neo4j;NEO4J_PASSWORD=<your Neo4j password>
+                    NEPTUNE_HOST=bolt://<your IP address>:7687;NEPTUNE_USER=NEPTUNE;NEPTUNE_PASSWORD=<your NEPTUNE password>
 """
 
 from cProfile import label
@@ -20,12 +20,14 @@ import os
 import pandas as pd
 import numpy as np
 import neo4j.time
+from dotenv import load_dotenv
+load_dotenv()
 
 # Provide a database connection that can be used by the various tests that need it
 @pytest.fixture(scope="module")
 def db():
     # MAKE SURE TO FIRST SET THE ENVIRONMENT VARIABLES, prior to run the pytests in this file!
-    neo_obj = neptuneaccess.NeptuneAccess(host=os.environ.get("NEPTUNE_HOST"),credentials=("username","password"),debug=False)     # Change the debug option to True if desired
+    neo_obj = neptuneaccess.NeptuneAccess(host=os.getenv("NEPTUNE_HOST"),credentials=("username","password"),debug=False)     # Change the debug option to True if desired
     yield neo_obj
 
 
@@ -35,7 +37,7 @@ def db():
 def test_construction():
     # Note: if database isn't running, the error output includes the line:
     """
-        Exception: CHECK IF NEO4J IS RUNNING! While instantiating the NeoAccess object,
+        Exception: CHECK IF NEPTUNE IS RUNNING! While instantiating the NeoAccess object,
         failed to create the driver: Unable to retrieve routing information
     """
 
@@ -53,7 +55,7 @@ def test_construction():
     obj1 = neptuneaccess.NeptuneAccess(url, debug=False)       # Rely on default username/pass
 
     assert obj1.debug is False
-    assert obj1.version() == "4.4.11"    # Test the version of the Neo4j driver (this ought to match the value in requirements.txt)
+    assert obj1.version() == "4.4.11"    # Test the version of the neptune driver (this ought to match the value in requirements.txt)
 
 
     # Another way of instantiating the class

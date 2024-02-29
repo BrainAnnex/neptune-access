@@ -24,7 +24,7 @@ def compare_recordsets(rs1: [{}], rs2: [{}]) -> bool:
 
     :return:    True if there's a match, or False otherwise
     """
-
+    print("rs1 - ",rs1)
     # Verify the type of the arguments
     assert isinstance(rs1, list), "compare_recordsets() : The 1st argument is not a list!  Value = " + str(rs1)
     assert isinstance(rs2, list), "compare_recordsets() : The 2nd argument is not a list!  Value = " + str(rs2)

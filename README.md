@@ -86,3 +86,8 @@ Graph databases excel in managing the complexity of healthcare data due to:
 - Neo4j: User-friendly interface, strong consistency, active community support
 
 
+To test the testcases:
+
+export NEPTUNE_HOST=<neptune_host>
+
+pytest tests/test_neptuneaccess.py -vv

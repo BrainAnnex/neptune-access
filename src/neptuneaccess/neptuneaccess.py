@@ -414,7 +414,7 @@ class NeptuneAccess(NeptuneAccessCore):
     """
     IMPORTANT : for both Neo4j and Neptune database, the internal ID of a node is NOT guaranteed to be the same across different sessions.
 
-    High-level class to interface with the Neo4j graph database from Python.
+    High-level class to interface with the neptune graph database from Python.
 
     Tested on version 4.4 of Neo4j Community version, but should work with other 4.x versions, too.
     NOT tested on any other major version of Neo4j; in particular, NOT tested with version 5
@@ -615,14 +615,14 @@ class NeptuneAccess(NeptuneAccessCore):
                       return_internal_id=False, return_labels=False, order_by=None, limit=None,
                       single_row=False, single_cell=""):
         """
-        Returns a list of the records corresponding to all the Neo4j nodes specified by the given match data.
+        Returns a list of the records corresponding to all the neptune nodes specified by the given match data.
 
         The records are returned as dictionaries of all the key/value node properties.
 
         Args:
             match (Union[int, NodeSpecs]): Either an integer with an internal database node id, or a "NodeSpecs" object, as returned by match(), with data to identify a node or set of nodes.
-            return_internal_id (bool, optional): If True, the Neo4j internal node ID is included in the returned data. Defaults to False.
-            return_labels (bool, optional): If True, the Neo4j label names are included in the returned data. Defaults to False.
+            return_internal_id (bool, optional): If True, the neptune internal node ID is included in the returned data. Defaults to False.
+            return_labels (bool, optional): If True, the neptune label names are included in the returned data. Defaults to False.
             order_by (str, optional): A string specifying the field to order the results by. Defaults to None.
             limit (int, optional): An integer specifying the maximum number of results to return. Defaults to None.
             single_row (bool, optional): If True, only the first record is returned. If no record exists, None is returned. Defaults to False.
@@ -687,7 +687,7 @@ class NeptuneAccess(NeptuneAccessCore):
 
     def get_df(self, match: Union[int, NodeSpecs], order_by=None, limit=None) -> pd.DataFrame:
         """
-        Returns a Pandas DataFrame containing the records corresponding to all the Neo4j nodes specified by the given match data.
+        Returns a Pandas DataFrame containing the records corresponding to all the neptune nodes specified by the given match data.
 
         This function is similar to get_nodes(), but with fewer arguments, and the result is returned as a Pandas DataFrame.
 
@@ -697,7 +697,7 @@ class NeptuneAccess(NeptuneAccessCore):
             limit (int, optional): An integer specifying the maximum number of results to return. Defaults to None.
 
         Returns:
-            pd.DataFrame: A DataFrame containing the records corresponding to all the Neo4j nodes specified by the given match data.
+            pd.DataFrame: A DataFrame containing the records corresponding to all the neptune nodes specified by the given match data.
 
         Example:
             df = neptune_access.get_df(match=123)
@@ -715,7 +715,7 @@ class NeptuneAccess(NeptuneAccessCore):
         in order to identify a node or group of nodes.
 
         Args:
-            labels (str or list/tuple of str, optional): One or more Neo4j labels. Defaults to None.
+            labels (str or list/tuple of str, optional): One or more neptune labels. Defaults to None.
             internal_id (str, optional): The node's internal database ID. If specified, it overrides all the remaining arguments [except for the labels]. Defaults to None.
             key_name (str, optional): The name of a node attribute; if provided, key_value must be present, too. Defaults to None.
             key_value (str, optional): The required value for the above key; if provided, key_name must be present, too. Defaults to None.
@@ -822,7 +822,7 @@ class NeptuneAccess(NeptuneAccessCore):
         print("------------")
         print("create_node results ------",result_list)
         print("------------")
-        return result_list[0]          # Return the Neo4j internal ID of the node just created
+        return result_list[0]          # Return the neptune internal ID of the node just created
 
 
 
@@ -831,7 +831,7 @@ class NeptuneAccess(NeptuneAccessCore):
         Creates a new node with the given labels and properties only if no other node with the same labels and properties exists.
 
         Args:
-            labels (str or list/tuple of str): A string, or list/tuple of strings, specifying Neo4j labels. It's acceptable to have blank spaces.
+            labels (str or list/tuple of str): A string, or list/tuple of strings, specifying neptune labels. It's acceptable to have blank spaces.
             properties (dict, optional): An optional (possibly empty or None) dictionary of properties to try to match in an existing node, or - if not found - to set in a new node. Defaults to None.
                 Example: {'age': 22, 'gender': 'F'}
 
@@ -940,7 +940,7 @@ class NeptuneAccess(NeptuneAccessCore):
             merge (bool, optional): If True, a new node gets created only if there's no existing node with the same properties and labels. Defaults to False.
 
         Returns:
-            int: An integer with the Neo4j ID of the newly-created node.
+            int: An integer with the neptune ID of the newly-created node.
 
         Raises:
             Exception: If any of the requested link nodes isn't found, then no new node is created, and an Exception is raised.
@@ -1105,7 +1105,7 @@ class NeptuneAccess(NeptuneAccessCore):
                 "rel_attrs" (dict, optional): A dictionary of relationship attributes.
 
         Returns:
-            int: If successful, an integer with the Neo4j internal ID of the node just created; otherwise, an Exception is raised.
+            int: If successful, an integer with the neptune internal ID of the node just created; otherwise, an Exception is raised.
 
         Raises:
             Exception: If the specified pre-existing nodes aren't found, then no new node is created, and an Exception is raised.
@@ -1184,7 +1184,7 @@ class NeptuneAccess(NeptuneAccessCore):
             # EXAMPLE of cypher_dict_for_node: {'NODE1_par_1': 2021}    (possibly an empty dict)
 
             data_binding.update(cypher_dict_for_node)           # Merge cypher_dict_for_node into the data_binding dictionary
-            number_props_to_set += len(cypher_dict_for_node)    # This will be part of the summary count returned by Neo4j
+            number_props_to_set += len(cypher_dict_for_node)    # This will be part of the summary count returned by neptune
 
             if rel_dir == "OUT":
                 q_MERGE += f"MERGE (n)-[:{rel_name} {rel_attrs_str}]->({node_dummy_name})\n"  # Form an OUT-bound connection
@@ -1221,7 +1221,7 @@ class NeptuneAccess(NeptuneAccessCore):
         if internal_id is None:    # Note: internal_id might be zero
             raise Exception("Unable to extract internal ID of the newly-created node")
 
-        return internal_id    # Return the Neo4j ID of the new node
+        return internal_id    # Return the neptune ID of the new node
 
 
 
@@ -1263,7 +1263,7 @@ class NeptuneAccess(NeptuneAccessCore):
 
     def delete_nodes_by_label(self, delete_labels=None, keep_labels=None) -> None:
         """
-        Deletes nodes from the Neo4j database based on their labels.
+        Deletes nodes from the neptune database based on their labels.
 
         This function deletes nodes with the specified labels (`delete_labels`) from the database. If `keep_labels` is specified, nodes with these labels will be preserved, even if they also have labels in `delete_labels`. The `keep_labels` list has higher priority; if a label occurs in both lists, it will be kept. Note that this function does not clear indexes, so "ghost" labels may remain.
 
@@ -1425,7 +1425,7 @@ class NeptuneAccess(NeptuneAccessCore):
     # def get_relationship_types(self) -> [str]:
     # todo:call yield queries not supported by Neptune
     #     """
-    #     Extract and return a list of all the Neo4j relationship names (i.e. types of relationships)
+    #     Extract and return a list of all the neptune relationship names (i.e. types of relationships)
     #     present in the entire database, in no particular order
 
     #     :return:    A list of strings
@@ -1502,7 +1502,7 @@ class NeptuneAccess(NeptuneAccessCore):
         Notes:
             - The nodes themselves are left untouched.
             - More than one node could be present in either of the matches.
-            - The number of relationships deleted could be more than one even with a single "from" node and a single "to" node. Neo4j allows multiple relationships with the same name between the same two nodes, as long as the relationships differ in their properties.
+            - The number of relationships deleted could be more than one even with a single "from" node and a single "to" node. neptune allows multiple relationships with the same name between the same two nodes, as long as the relationships differ in their properties.
         """
         cypher_query = (
             f"MATCH (from)-[r:{rel_name}]->(to) "
@@ -1598,7 +1598,7 @@ class NeptuneAccess(NeptuneAccessCore):
         
     def link_nodes_by_ids(self, node_id1:str, node_id2:str, rel:str, rel_props = None) -> None:
         """
-        Locates two Neo4j nodes with the given Neo4j internal IDs and adds a relationship between them.
+        Locates two neptune nodes with the given neptune internal IDs and adds a relationship between them.
 
         This function finds the nodes with the specified IDs (`node_id1` and `node_id2`), and if both nodes are found, it adds a relationship with the specified name (`rel`) from the first node to the second node. If a relationship with the same name already exists between the same nodes, no new relationship is created.
 
@@ -1632,7 +1632,7 @@ class NeptuneAccess(NeptuneAccessCore):
 
     def link_nodes_on_matching_property(self, label1:str, label2:str, property1:str, rel:str, property2=None) -> None:
         """
-        Locates pairs of Neo4j nodes with specified labels and matching properties, and adds a relationship between them.
+        Locates pairs of neptune nodes with specified labels and matching properties, and adds a relationship between them.
 
         This function finds pairs of nodes where the first node has the label `label1`, the second node has the label `label2`, and the two nodes have the same value for `property1` (or `property1` in the first node and `property2` in the second node, if `property2` is specified). For each such pair, it adds a relationship with the specified name (`rel`) from the first node to the second node, unless such a relationship already exists.
 
@@ -1868,7 +1868,7 @@ class NeptuneAccess(NeptuneAccessCore):
 
     def get_labels(self) -> [str]:
         """
-        Extracts and returns a list of all the Neo4j labels present in the database.
+        Extracts and returns a list of all the neptune labels present in the database.
 
         This function retrieves all unique labels from the nodes in the database. The order of the labels in the returned list is not guaranteed. To get the labels of a specific node, use the `get_node_labels()` function.
 
@@ -1928,7 +1928,7 @@ class NeptuneAccess(NeptuneAccessCore):
         """
 
 #         todo: swapnil:
-#         the error is that the Amazon Neptune service, which is compatible with OpenCypher, may not support certain Neo4j-specific procedures like db.     schema.nodeTypeProperties(). This procedure is specific to Neo4j and may not be available in Amazon Neptune.To retrieve property names of nodes with a given label in Amazon Neptune, you can modify your approach. Instead of using Neo4j-specific procedures, you can directly query the nodes and extract their properties dynamically.
+#         the error is that the Amazon Neptune service, which is compatible with OpenCypher, may not support certain neptune-specific procedures like db.     schema.nodeTypeProperties(). This procedure is specific to neptune and may not be available in Amazon Neptune.To retrieve property names of nodes with a given label in Amazon Neptune, you can modify your approach. Instead of using neptune-specific procedures, you can directly query the nodes and extract their properties dynamically.
         q = f"MATCH (n:{label}) RETURN DISTINCT keys(n) AS properties"
         result = self.query(q)
         return sorted(list(set(property for res in result for property in res['properties'])))
@@ -2037,7 +2037,7 @@ class NeptuneAccess(NeptuneAccessCore):
             if self.apoc:
                 self.query("call apoc.schema.assert({},{})")
             else:
-                self.drop_all_constraints()    # TODO: it doesn't work in version 5.5 of the Neo4j database
+                self.drop_all_constraints()    # TODO: it doesn't work in version 5.5 of the neptune database
 
         indexes = self.get_indexes()
         for name in indexes['name']:
@@ -2153,22 +2153,22 @@ class NeptuneAccess(NeptuneAccessCore):
             merge_primary_key=None, merge_overwrite=False,
             rename=None, ignore_nan=True, max_chunk_size=10000) -> [int]:
         """
-        Load a Pandas Data Frame (or Series) into Neo4j.
+        Load a Pandas Data Frame (or Series) into neptune.
         Each row is loaded as a separate node.
 
-        Columns whose dtype is integer will appear as integer data types in the Neo4j nodes
+        Columns whose dtype is integer will appear as integer data types in the neptune nodes
             (however, if a NaN is present in a Pandas column, it'll automatically be transformed to float)
 
         Database indexes are added as needed, if the "merge_primary_key" argument is used.
 
-        TODO: maybe save the Panda data frame's row number as an attribute of the Neo4j nodes, to ALWAYS have a primary key
+        TODO: maybe save the Panda data frame's row number as an attribute of the neptune nodes, to ALWAYS have a primary key
               maybe allow a bulk auto-increment field
               maybe allow to link all nodes to a given existing one
 
-        :param df:              A Pandas Data Frame (or Series) to import into Neo4j.
+        :param df:              A Pandas Data Frame (or Series) to import into neptune.
                                     If it's a Series, it's treated as a single column (named "value", if it lacks a name)
 
-        :param labels:          A string, or list/tuple of strings - representing one or more Neo4j labels
+        :param labels:          A string, or list/tuple of strings - representing one or more neptune labels
                                     to use on all the newly-created nodes
 
         :param merge_primary_key: (OPTIONAL) Used to request that new records be merged (rather than added)
@@ -2202,7 +2202,7 @@ class NeptuneAccess(NeptuneAccessCore):
             df = df.rename(rename, axis=1)  # Rename the columns in the Pandas data frame
 
 
-        # Convert Pandas' datetime format to Neo4j's
+        # Convert Pandas' datetime format to neptune's
         df = self.pd_datetime_to_neo4j_datetime(df)
 
 
@@ -2295,7 +2295,7 @@ class NeptuneAccess(NeptuneAccessCore):
     def pd_datetime_to_neo4j_datetime(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         If any column in the given Pandas Data Frame is of dtype datetime or timedelta,
-        replace its entries with a Neo4j-friendly datetime type.
+        replace its entries with a neptune-friendly datetime type.
 
         If any change is needed, return a modified COPY of the dataframe;
         otherwise, return the original dataframe (no cloning done)
@@ -2347,8 +2347,8 @@ class NeptuneAccess(NeptuneAccessCore):
         Import data from a CSV file located on the same file system as the Neo4j database,
         and the records represent nodes to be created in the database.
 
-        IMPORTANT:  the file to import MUST be located in the special folder NEO4J_HOME/import,
-                    unless the Neo4j configuration file is first modified - and the database restarted!
+        IMPORTANT:  the file to import MUST be located in the special folder neptune_HOME/import,
+                    unless the neptune configuration file is first modified - and the database restarted!
                     A typical default location, when Neo4j is installed on Linux, is:  /var/lib/neo4j/import
 
         :param filename:    EXAMPLE in Linux:   "test.csv"
@@ -2424,7 +2424,7 @@ class NeptuneAccess(NeptuneAccessCore):
 
     def export_dbase_json(self) -> {}:
         """
-        Export the entire Neo4j database as a JSON string.
+        Export the entire neptune database as a JSON string.
         TODO: offer an option to automatically include today's date in the name of exported file
 
         IMPORTANT: APOC must be activated in the database, to use this function.
@@ -2440,7 +2440,7 @@ class NeptuneAccess(NeptuneAccessCore):
                    ]'
         }
 
-        SIDE NOTE: the Neo4j Browser uses a slightly different format for NODES:
+        SIDE NOTE: the neptune Browser uses a slightly different format for NODES:
                 {
                   "identity": 4,
                   "labels": [
@@ -2585,7 +2585,7 @@ class NeptuneAccess(NeptuneAccessCore):
         TODO: maintain a list of all created nodes - so as to be able to delete them all in case of failure.
 
         :param json_str:    A JSON string representing the data to import
-        :param root_labels: String, or list of strings, to be used as Neo4j labels for the root node(s)
+        :param root_labels: String, or list of strings, to be used as neptune labels for the root node(s)
         :param parse_only:  If True, the parsed data will NOT be added to the database
         :param provenance:  Optional string to store in a "source" attribute in the root node
                                 (only used if the top-level JSON structure is an object, i.e. if there's a single root node)
@@ -2633,9 +2633,9 @@ class NeptuneAccess(NeptuneAccessCore):
         :param python_data: Python data to import.
                                 The data can be a literal, or list, or dictionary
                                 - and lists/dictionaries may be nested
-        :param root_labels: String, or list of strings, to be used as Neo4j labels for the root node(s)
+        :param root_labels: String, or list of strings, to be used as neptune labels for the root node(s)
         :param level:       Recursion level (also used for debugging, to make the indentation more readable)
-        :return:            List of integer Neo4j internal ID's (possibly empty), of the root node(s) created
+        :return:            List of integer neptune internal ID's (possibly empty), of the root node(s) created
         """
         indent_str = self.indent_chooser(level)
         self.debug_print(f"{indent_str}{level}. ~~~~~:")
@@ -2688,14 +2688,14 @@ class NeptuneAccess(NeptuneAccessCore):
         TODO: pytest
 
         :param d:       A Python dictionary with data to import
-        :param labels:  String, or list of strings, to be used as Neo4j labels for the node
+        :param labels:  String, or list of strings, to be used as neptune labels for the node
         :param level:   Integer with recursion level (used just to format debugging output)
         :return:        Integer with the internal database id of the newly-created (top-level) node
         """
         indent_str = self.indent_chooser(level)
 
         node_properties = {}    # Dictionary to be filled in with all the properties of the new node
-        children_info = []      # A list of pairs (Neo4j ID, relationship name)
+        children_info = []      # A list of pairs (neptune ID, relationship name)
 
         # Loop over all the dictionary entries
         for k, v in d.items():
@@ -2740,7 +2740,7 @@ class NeptuneAccess(NeptuneAccessCore):
         TODO: pytest
 
         :param l:       A list with data to import
-        :param labels:  String, or list of strings, to be used as Neo4j labels for the node
+        :param labels:  String, or list of strings, to be used as neptune labels for the node
         :param level:   Integer with recursion level (just used to format debugging output)
         :return:        List (possibly empty) of internal database id's of the newly-created nodes
         """
@@ -2771,7 +2771,7 @@ class NeptuneAccess(NeptuneAccessCore):
         that was created by the earlier data dump.
 
         IMPORTANT: the internal id's of the nodes need to be shifted,
-              because one cannot force the Neo4j internal id's to be any particular value...
+              because one cannot force the neptune internal id's to be any particular value...
               and, besides (if one is importing into an existing database), particular id's may already be taken.
 
         :param json_str:            A JSON string with the format specified under export_dbase_json()
@@ -2797,7 +2797,7 @@ class NeptuneAccess(NeptuneAccessCore):
             "import_json_dump(): the JSON string does not represent a list"
 
 
-        id_shifting = {}    # To map the Neo4j internal ID's specified in the JSON data dump
+        id_shifting = {}    # To map the neptune internal ID's specified in the JSON data dump
         #       into the ID's of newly-created nodes
 
         if extended_validation:
