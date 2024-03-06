@@ -1,6 +1,4 @@
-
-from unittest import result
-from neo4j import AuthToken, GraphDatabase, Query                         # The Neo4j python connectivity library "Neo4j Python Driver"
+from neo4j import AuthToken, GraphDatabase, Query       # The Neo4j python connectivity library "Neo4j Python Driver"
 from neo4j import __version__ as neo4j_driver_version   # The version of the Neo4j driver being used
 from neo4j.time import DateTime                         # to convert neo4j.time.DateTime's to python datetimes (and Dates)
 import neo4j.graph                                      # To check returned data types
