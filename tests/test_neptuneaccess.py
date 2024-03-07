@@ -42,10 +42,10 @@ def test_construction():
     """
 
     # MAKE SURE TO FIRST SET THE ENVIRONMENT VARIABLES
-    url = os.environ.get("NEPTUNE_HOST")
+    url = os.getenv("NEPTUNE_HOST")
 
-    credentials_name = os.environ.get("NEPTUNE_USERNAME")
-    credentials_pass = os.environ.get("NEPTUNE_PASSWORD")
+    credentials_name = os.getenv("NEPTUNE_USERNAME")
+    credentials_pass = os.getenv("NEPTUNE_PASSWORD")
 
     credentials_as_tuple = (credentials_name, credentials_pass)
     credentials_as_list = [credentials_name, credentials_pass]
