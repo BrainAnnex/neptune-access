@@ -115,7 +115,7 @@ class NeptuneAccessCore:
             neptune_access = NeptuneAccess(host="localhost", port=8182, credentials=("user", "password"))
             print(neptune_access.version())  # Outputs: '1.0.0'
         """
-        return "4.4.11"  # or any version number you prefer
+        return "1.2.1.0"  # or any version number you prefer
         
         
 
