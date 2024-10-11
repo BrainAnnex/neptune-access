@@ -1,13 +1,8 @@
-# High-level python interface to the Neo4j and Neptune graph database
+# High-level python interface to the AWS Neptune graph database
 
-https://brainannex.org/guide.php
+`NeptuneAccess` is a port to AWS Neptune of the Neo4j-based `NeoAccess` library, with is part of the open-source project [BrainAnnex.org](https://BrainAnnex.org)
 
-
-This library used to be distributed as part of the full technology stack "Brain Annex";
-but, starting with version 4.0.3, it's being independently released.
-
-To use it, just `pip install neoaccess`
-
+For general information about motivation and usage for this library, please see:
 
 [Intro and tutorial](https://julianspolymathexplorations.blogspot.com/2023/06/neo4j-python-neoaccess-library.html)
 
